@@ -62,9 +62,9 @@ class Graph {
 
 
 		
-		pixelsPerSecond = round(pixelSecondsSlider.value());
+		pixelsPerSecond = round(pixelSecondsSlider.getValue());
 		
-		switch(round(renderModeRadio.value())) {
+		switch(round(renderModeRadio.getValue())) {
 		  case 1:
 				renderMode = "Lines";
 				break;
@@ -79,7 +79,7 @@ class Graph {
 				break;								
 		}
 		
-		switch(round(scaleRadio.value())) {
+		switch(round(scaleRadio.getValue())) {
 		  case 1:
 				scaleMode = "Local";
 				break;

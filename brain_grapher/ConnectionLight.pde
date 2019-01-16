@@ -15,8 +15,8 @@ class ConnectionLight {
 		diameter = _diameter;
 		parent = _parent;
 		
- 		label = new Textlabel(parent,"CONNECTION\nQUALITY", 32, 6);		
-		label.setFont(ControlP5.standard58);
+ 		label = new Textlabel(controlP5,"CONNECTION\nQUALITY", 32, 6);		
+		//label.setFont(ControlP5.standard58);
 		label.setColorValue(color(0));
 	}
 	

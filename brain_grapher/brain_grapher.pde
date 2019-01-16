@@ -1,5 +1,5 @@
 import controlP5.*;
-import org.json.*; 
+//import org.json.*; 
 import processing.net.*;
 
 
@@ -21,7 +21,7 @@ void setup() {
 	
 	// Set up the knobs and dials
 	controlP5 = new ControlP5(this);
-	controlP5.setColorLabel(color(0));
+	//controlP5.setColorLabel(color(0));
 	// controlP5.setColorValue(color(0));	
 	controlP5.setColorBackground(color(0));
 	//controlP5.setColorForeground(color(130));
@@ -133,39 +133,32 @@ void clientEvent(Client  myClient) {
   // {"eSense":{"attention":91,"meditation":41},"eegPower":{"delta":1105014,"theta":211310,"lowAlpha":7730,"highAlpha":68568,"lowBeta":12949,"highBeta":47455,"lowGamma":55770,"highGamma":28247},"poorSignalLevel":0}
   
   if (myClient.available() > 0) {
-  
-    String data = myClient.readString();
-    try {
-      JSONObject json = new JSONObject(data);
-      
-      channels[0].addDataPoint(Integer.parseInt(json.getString("poorSignalLevel")));
+    String data = myClient.readStringUntil(10);
+    if(data == null) return;
+    println(data);
+      JSONObject json = parseJSONObject(data);
+      if(!json.isNull("poorSignalLevel"))
+      channels[0].addDataPoint(json.getInt("poorSignalLevel"));
       
       JSONObject esense = json.getJSONObject("eSense");
       if (esense != null) {
-        channels[1].addDataPoint(Integer.parseInt(esense.getString("attention")));
-        channels[2].addDataPoint(Integer.parseInt(esense.getString("meditation"))); 
+        channels[1].addDataPoint(esense.getInt("attention"));
+        channels[2].addDataPoint(esense.getInt("meditation")); 
       }
       
       JSONObject eegPower = json.getJSONObject("eegPower");
       if (eegPower != null) {
-        channels[3].addDataPoint(Integer.parseInt(eegPower.getString("delta")));
-        channels[4].addDataPoint(Integer.parseInt(eegPower.getString("theta"))); 
-        channels[5].addDataPoint(Integer.parseInt(eegPower.getString("lowAlpha")));
-        channels[6].addDataPoint(Integer.parseInt(eegPower.getString("highAlpha")));  
-        channels[7].addDataPoint(Integer.parseInt(eegPower.getString("lowBeta")));
-        channels[8].addDataPoint(Integer.parseInt(eegPower.getString("highBeta")));
-        channels[9].addDataPoint(Integer.parseInt(eegPower.getString("lowGamma")));
-        channels[10].addDataPoint(Integer.parseInt(eegPower.getString("highGamma")));
+        channels[3].addDataPoint(eegPower.getInt("delta"));
+        channels[4].addDataPoint(eegPower.getInt("theta")); 
+        channels[5].addDataPoint(eegPower.getInt("lowAlpha"));
+        channels[6].addDataPoint(eegPower.getInt("highAlpha"));  
+        channels[7].addDataPoint(eegPower.getInt("lowBeta"));
+        channels[8].addDataPoint(eegPower.getInt("highBeta"));
+        channels[9].addDataPoint(eegPower.getInt("lowGamma"));
+        channels[10].addDataPoint(eegPower.getInt("highGamma"));
       }
       
-      packetCount++;
-  
-      
-    }
-    catch (JSONException e) {
-      println ("There was an error parsing the JSONObject." + e);
-    };
-  
+      packetCount++;  
   }
 
 }

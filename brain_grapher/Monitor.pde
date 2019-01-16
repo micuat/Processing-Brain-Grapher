@@ -20,8 +20,8 @@ class Monitor {
 		showGraph.setColorForeground(sourceChannel.drawColor);
 		showGraph.setColorActive(color(0));
 		
- 		label = new Textlabel(parent,sourceChannel.name, x + 16, y + 16);
-		label.setFont(ControlP5.grixel);
+ 		label = new Textlabel(controlP5,sourceChannel.name, x + 16, y + 16);
+		//label.setFont(ControlP5.grixel);
 		label.setColorValue(0);
 
 	}
@@ -32,7 +32,7 @@ class Monitor {
 	
 	void draw() {
 		// this technically only neds to happen on the packet, not every frame
-		if(showGraph.getItem(0).value() == 0) {
+		if(showGraph.getItem(0).getValue() == 0) {
 			sourceChannel.graphMe = false;
 		}
 		else {
@@ -86,4 +86,3 @@ class Monitor {
 	
 
 }
-
